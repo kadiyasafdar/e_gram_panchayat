@@ -1,7 +1,5 @@
 import 'package:e_gram_panchayat/app/utility/toster_message.dart';
-
 import 'package:http/http.dart' as http;
-
 import 'theme.dart';
 
 class ApiServices {
