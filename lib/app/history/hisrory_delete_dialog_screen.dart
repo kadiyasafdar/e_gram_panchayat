@@ -1,4 +1,4 @@
-import 'package:e_gram_panchayat/app/utility/colors.dart';
+import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

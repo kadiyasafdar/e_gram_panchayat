@@ -1,6 +1,6 @@
 import 'package:e_gram_panchayat/app/history/hisrory_delete_dialog_screen.dart';
 import 'package:e_gram_panchayat/app/history/history_bottomsheet_screen.dart';
-import 'package:e_gram_panchayat/app/utility/colors.dart';
+import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:e_gram_panchayat/app/utility/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -25,7 +25,7 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 }
-//<=============== header ===============>
+//<=============== Header Section  ===============>
 
 Widget header() {
   return Padding(
@@ -34,7 +34,7 @@ Widget header() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
       children: [
-        Text('data', style: TextStyle(color: primary)),
+        SizedBox(width: Get.height / 47.25, height: Get.height / 47.25),
         Text(
           'History',
           style: TextStyle(

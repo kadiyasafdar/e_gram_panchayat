@@ -1,4 +1,4 @@
-import 'package:e_gram_panchayat/app/Splash/Splash_Screen.dart';
+import 'package:e_gram_panchayat/app/Splash/splash_screen.dart';
 import 'package:e_gram_panchayat/app/history/history_screen.dart';
 import 'package:e_gram_panchayat/app/home/home_screen.dart';
 import 'package:get/get.dart';

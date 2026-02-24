@@ -1,4 +1,4 @@
-import 'package:e_gram_panchayat/app/utility/colors.dart';
+import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -69,7 +69,7 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: Get.height / 84),
-                Container(
+                SizedBox(
                   height: Get.height / 16.8,
                   child: TextField(
                     cursorColor: dark,
@@ -113,7 +113,7 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: Get.height / 84),
-                Container(
+                SizedBox(
                   height: Get.height / 16.8,
                   child: TextField(
                     cursorColor: dark,

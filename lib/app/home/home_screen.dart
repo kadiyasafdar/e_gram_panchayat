@@ -1,5 +1,5 @@
 import 'package:e_gram_panchayat/app/home/home_controler.dart';
-import 'package:e_gram_panchayat/app/utility/colors.dart';
+import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:e_gram_panchayat/app/utility/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +9,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize Controller
+
     final controller = Get.put(HomeControler());
 
     return Scaffold(
@@ -17,9 +19,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView(
-                children: [header(), customTextField(controller)],
-              ),
+              child: ListView(children: [header(), formsection(controller)]),
             ),
             bottomnewbar(),
           ],
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-//<=============== header ===============>
+//<=============== HEADER SECTION ===============>
 
 Widget header() {
   return Column(
@@ -51,12 +51,12 @@ Widget header() {
     ],
   );
 }
-//<=============== customTextField ===============>
+//<=============== FORM SECTION  ===============>
 
-Widget customTextField(HomeControler controller) {
+Widget formsection(HomeControler controller) {
   return Container(
     width: Get.width,
-    constraints: BoxConstraints(minHeight: Get.height),
+
     decoration: BoxDecoration(
       color: tertiary,
       borderRadius: BorderRadius.only(
@@ -72,7 +72,7 @@ Widget customTextField(HomeControler controller) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //<=============== Village (Gram Panchayat) ===============>
+          //<=============== Village Field  ===============>
           Text(
             'Village (Gram Panchayat)',
             style: TextStyle(
@@ -87,6 +87,11 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.village,
+              onChanged: (value) {
+                controller.validatevillage(value);
+              },
+
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -117,8 +122,27 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.villageError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.villageError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 37.8),
-          //<=============== Taluka===============>
+          //<=============== Taluka Field ===============>
           Text(
             'Taluka',
             style: TextStyle(
@@ -133,6 +157,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.taluka,
+              onChanged: (value) {
+                controller.validatetaluka(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -163,8 +191,27 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.talukaError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.talukaError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 37.8),
-          //<=============== District ===============>
+          //<=============== District Field  ===============>
           Text(
             'District',
             style: TextStyle(
@@ -179,6 +226,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.district,
+              onChanged: (value) {
+                controller.validatedistrict(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -209,8 +260,27 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.districtError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.districtError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 37.8),
-          //<=============== Description One ===============>
+          //<=============== Description One Field  ===============>
           Text(
             'Description One',
             style: TextStyle(
@@ -225,6 +295,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.descriptionOne,
+              onChanged: (value) {
+                controller.validatedescriptionOne(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -255,8 +329,28 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.descriptionOneError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.descriptionOneError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
+
           SizedBox(height: Get.height / 37.8),
-          //<=============== Description Two ===============>
+          //<=============== Description Two Field ===============>
           Text(
             'Description Two',
             style: TextStyle(
@@ -271,6 +365,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.descriptionTwo,
+              onChanged: (value) {
+                controller.validatedescriptionTwo(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -301,8 +399,27 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.descriptionTwoError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.descriptionTwoError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 37.8),
-          //<=============== Description Three  ===============>
+          //<=============== Description Three Field  ===============>
           Text(
             'Description Three',
             style: TextStyle(
@@ -317,6 +434,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.descriptionThree,
+              onChanged: (value) {
+                controller.validatedescriptionThree(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -347,8 +468,27 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.descriptionThreeError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.descriptionThreeError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 37.8),
-          //<=============== Description Four ===============>
+          //<=============== Description Four Field ===============>
           Text(
             'Description Four',
             style: TextStyle(
@@ -363,6 +503,10 @@ Widget customTextField(HomeControler controller) {
           SizedBox(
             height: Get.height / 16.8,
             child: TextField(
+              controller: controller.descriptionFour,
+              onChanged: (value) {
+                controller.validatedescriptionFour(value);
+              },
               cursorColor: dark,
               style: TextStyle(
                 color: dark,
@@ -393,11 +537,30 @@ Widget customTextField(HomeControler controller) {
               ),
             ),
           ),
+          Obx(
+            () => controller.descriptionFourError.value == ""
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(top: Get.height / 108),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        controller.descriptionFourError.value,
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: Get.height / 81,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
           SizedBox(height: Get.height / 32.8),
-          //<=============== PaymentOptionSelector ===============>
+          //<=============== Payment Option Selection  ===============>
           Row(
             children: [
-              //<===============  CASH   ===============>
+              //<===============  Cash Option ===============>
               Obx(
                 () => GestureDetector(
                   onTap: () => controller.changeType('Cash'),
@@ -426,7 +589,7 @@ Widget customTextField(HomeControler controller) {
                 ),
               ),
               SizedBox(width: Get.height / 29.07),
-              //<===============  CHEQUE  ===============>
+              //<===============  Cheque Option  ===============>
               Obx(
                 () => GestureDetector(
                   onTap: () => controller.changeType('Cheque'),
@@ -458,13 +621,13 @@ Widget customTextField(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 34.36),
 
-          /// ================= CHEQUE FORM =================
+          /// ================= Cheque Details Section =================
           Obx(
             () => controller.selectedType.value == 'Cheque'
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //<=============== cheque or draft number ===============>
+                      //<=============== Cheque Number Field ===============>
                       Text(
                         'Cheque / Draft No',
                         style: TextStyle(
@@ -514,7 +677,7 @@ Widget customTextField(HomeControler controller) {
                       ),
                       SizedBox(height: Get.height / 37.8),
 
-                      //<=============== Bank Name ===============>
+                      //<=============== Bank Name Field ===============>
                       Text(
                         'Bank Name',
                         style: TextStyle(
@@ -564,7 +727,7 @@ Widget customTextField(HomeControler controller) {
                       ),
                       SizedBox(height: Get.height / 37.8),
 
-                      //<===============  date ===============>
+                      //<===============  Cheque Date Field ===============>
                       Text(
                         'Date',
                         style: TextStyle(
@@ -622,9 +785,11 @@ Widget customTextField(HomeControler controller) {
                 : const SizedBox(),
           ),
           SizedBox(height: Get.height / 32.8),
+
+          //<===============   Save Button ===============>
           GestureDetector(
             onTap: () {
-              Get.toNamed(AppRouter.history);
+              controller.saveUserData();
             },
             child: Container(
               width: Get.width,
@@ -652,7 +817,7 @@ Widget customTextField(HomeControler controller) {
     ),
   );
 }
-//<============ bottom navigation bar section ==================>
+//<============ Bottom Navigation Bar ==================>
 
 Widget bottomnewbar() {
   return Container(
@@ -666,6 +831,7 @@ Widget bottomnewbar() {
       ),
       child: Row(
         children: [
+          //<============ Home Button ==================>
           Expanded(
             child: Container(
               height: Get.height / 13.5,
@@ -696,6 +862,7 @@ Widget bottomnewbar() {
             ),
           ),
           SizedBox(width: Get.height / 37.8),
+          //<============ History Button ==================>
           Expanded(
             child: GestureDetector(
               onTap: () {
