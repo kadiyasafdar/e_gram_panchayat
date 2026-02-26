@@ -4,14 +4,46 @@ import 'package:e_gram_panchayat/app/utility/environment.dart';
 import 'package:e_gram_panchayat/app/utility/toster_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../utility/theme.dart';
+import 'package:intl/intl.dart';
 
 class HomeControler extends GetxController {
-  var selectedType = 'Cash'.obs;
+  // Checkbox Variable
+  RxBool cashCheckbox = false.obs;
+  RxBool chequeCheckbox = false.obs;
 
-  void changeType(String type) {
-    selectedType.value = type;
+  // Date Picker Variable
+  var selectedDate = DateTime.now().obs;
+  RxString formatedDate = ''.obs;
+  RxString dateToSendToApi = ''.obs;
+
+  // Select Date Function
+
+  void selectDate(BuildContext context) async {
+    try {
+      DateTime today = DateTime.now();
+      DateTime lastDate = DateTime(today.year, today.month, today.day);
+
+      // Ensure initialDate is not after lastDate
+      DateTime initialDate = selectedDate.value.isAfter(lastDate)
+          ? lastDate
+          : selectedDate.value;
+
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: DateTime(1990),
+        lastDate: lastDate,
+      );
+
+      if (picked != null && picked != selectedDate.value) {
+        selectedDate.value = picked;
+        formatedDate.value = DateFormat('dd-MM-yyyy').format(picked);
+        formatedDate.value = DateFormat('dd-MM-yyyy').format(picked);
+        dateToSendToApi.value = DateFormat('yyyy-MM-dd').format(picked);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   TextEditingController village = TextEditingController();
@@ -21,6 +53,8 @@ class HomeControler extends GetxController {
   TextEditingController descriptionTwo = TextEditingController();
   TextEditingController descriptionThree = TextEditingController();
   TextEditingController descriptionFour = TextEditingController();
+  TextEditingController chequeNo = TextEditingController();
+  TextEditingController bankName = TextEditingController();
 
   // Error Variables
   RxString villageError = "".obs;
@@ -88,49 +122,52 @@ class HomeControler extends GetxController {
   }
 
   void saveUserData() {
-    if (village.text.isEmpty) {
-      villageError.value = "Enter your village name";
-    } else {
-      villageError.value = "";
+    if (village.text == '') {
+      villageError.value = "villlage is required";
     }
 
-    if (taluka.text.isEmpty) {
-      talukaError.value = "Enter your taluka name";
-    } else {
-      talukaError.value = "";
+    if (taluka.text == '') {
+      talukaError.value = " taluka is required";
     }
 
-    if (district.text.isEmpty) {
-      districtError.value = "Enter your district name";
-    } else {
-      districtError.value = "";
+    if (district.text == '') {
+      districtError.value = "district is required";
     }
 
-    if (descriptionOne.text.isEmpty) {
-      descriptionOneError.value = "Enter description Price";
-    } else {
-      descriptionOneError.value = "";
+    if (descriptionOne.text == '') {
+      descriptionOneError.value = "description is required";
     }
 
-    if (descriptionTwo.text.isEmpty) {
-      descriptionTwoError.value = "Enter description Price";
-    } else {
-      descriptionTwoError.value = "";
+    if (descriptionTwo.text == '') {
+      descriptionTwoError.value = "description is required";
     }
 
-    if (descriptionThree.text.isEmpty) {
-      descriptionThreeError.value = "Enter description Price";
-    } else {
-      descriptionThreeError.value = "";
+    if (descriptionThree.text == '') {
+      descriptionThreeError.value = "description is required";
     }
 
-    if (descriptionFour.text.isEmpty) {
-      descriptionFourError.value = "Enter description Price";
-    } else {
-      descriptionFourError.value = "";
+    if (descriptionFour.text == '') {
+      descriptionFourError.value = "description is required";
     }
 
-    saveData();
+    if (villageError.value == '' &&
+        village.text.isNotEmpty &&
+        talukaError.value == '' &&
+        taluka.text.isNotEmpty &&
+        districtError.value == '' &&
+        district.text.isNotEmpty &&
+        descriptionOneError.value == '' &&
+        descriptionOne.text.isNotEmpty &&
+        descriptionTwoError.value == '' &&
+        descriptionTwo.text.isNotEmpty &&
+        descriptionThreeError.value == '' &&
+        descriptionThree.text.isNotEmpty &&
+        descriptionFourError.value == '' &&
+        descriptionFour.text.isNotEmpty) {
+      // All validations passed, call the SaveData function
+
+      saveData();
+    }
   }
 
   Future<void> saveData() async {
@@ -139,6 +176,12 @@ class HomeControler extends GetxController {
     try {
       // Show loader
       appProgressBarIndicator();
+      // Determine the payment method
+      String getPaymentMethod() {
+        if (cashCheckbox.value) return 'cash';
+        if (chequeCheckbox.value) return 'cheque';
+        return ''; // Default empty value if none is selected
+      }
 
       // Params Pass For API
       var params = {
@@ -149,10 +192,13 @@ class HomeControler extends GetxController {
         'description_price_2': descriptionTwo.text,
         'description_price_3': descriptionThree.text,
         'description_price_4': descriptionFour.text,
-        // 'cheque_no': chequeNo.text,
-        // 'bank_name': bankName.text,
-        // 'cheque_date': formattedDate.value,
+        'payment_method': getPaymentMethod(),
+        'cheque_no': chequeNo.text,
+        'bank_name': bankName.text,
+        'cheque_date': formatedDate.value,
       };
+
+      print(params);
 
       // API Calling
 
@@ -161,30 +207,35 @@ class HomeControler extends GetxController {
         params,
       );
 
+      print(response);
+
       var responseData = jsonDecode(response.body) as Map<String, dynamic>;
+      print(responseData);
 
       if (response.statusCode == 200 && responseData['status'] == 'success') {
         // Clear Inputs Value
         _clearInputs();
-
         // Off Loader
         Get.back();
 
         // Toaster Message
-        toasterMessage(responseData['message'], success);
+        toasterMessage(responseData['message'], type: ToastType.success);
       } else {
         // Off Loader
         Get.back();
 
         // Toaster Message
-        toasterMessage(responseData['message'], error);
+        toasterMessage(responseData['message'], type: ToastType.error);
       }
     } catch (e) {
       // Off Loader
+
+      print(e);
       Get.back();
 
       // Toaster Message
-      toasterMessage('Something Want Wrong', error);
+      toasterMessage('something went wrong', type: ToastType.error);
+      print('toasterMessage catch');
     }
   }
 
@@ -196,5 +247,7 @@ class HomeControler extends GetxController {
     descriptionTwo.clear();
     descriptionThree.clear();
     descriptionFour.clear();
+    chequeNo.clear();
+    bankName.clear();
   }
 }

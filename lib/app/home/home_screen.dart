@@ -19,7 +19,9 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView(children: [header(), formsection(controller)]),
+              child: ListView(
+                children: [header(), formsection(controller, context)],
+              ),
             ),
             bottomnewbar(),
           ],
@@ -53,7 +55,7 @@ Widget header() {
 }
 //<=============== FORM SECTION  ===============>
 
-Widget formsection(HomeControler controller) {
+Widget formsection(HomeControler controller, BuildContext context) {
   return Container(
     width: Get.width,
 
@@ -84,41 +86,35 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.village,
-              onChanged: (value) {
-                controller.validatevillage(value);
-              },
+          TextField(
+            controller: controller.village,
+            onChanged: (value) {
+              controller.validatevillage(value);
+            },
 
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter village name',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter village name',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -154,40 +150,34 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.taluka,
-              onChanged: (value) {
-                controller.validatetaluka(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.taluka,
+            onChanged: (value) {
+              controller.validatetaluka(value);
+            },
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter taluka name',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter taluka name',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -223,40 +213,34 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.district,
-              onChanged: (value) {
-                controller.validatedistrict(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.district,
+            onChanged: (value) {
+              controller.validatedistrict(value);
+            },
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter district name',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter district name',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -292,40 +276,35 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.descriptionOne,
-              onChanged: (value) {
-                controller.validatedescriptionOne(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.descriptionOne,
+            onChanged: (value) {
+              controller.validatedescriptionOne(value);
+            },
+            keyboardType: TextInputType.phone,
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter description Price',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter description Price',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -362,40 +341,35 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.descriptionTwo,
-              onChanged: (value) {
-                controller.validatedescriptionTwo(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.descriptionTwo,
+            onChanged: (value) {
+              controller.validatedescriptionTwo(value);
+            },
+            keyboardType: TextInputType.phone,
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter description Price',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter description Price',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -431,40 +405,35 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.descriptionThree,
-              onChanged: (value) {
-                controller.validatedescriptionThree(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.descriptionThree,
+            onChanged: (value) {
+              controller.validatedescriptionThree(value);
+            },
+            keyboardType: TextInputType.phone,
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter description Price',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter description Price',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -500,40 +469,35 @@ Widget formsection(HomeControler controller) {
           ),
           SizedBox(height: Get.height / 84),
 
-          SizedBox(
-            height: Get.height / 16.8,
-            child: TextField(
-              controller: controller.descriptionFour,
-              onChanged: (value) {
-                controller.validatedescriptionFour(value);
-              },
-              cursorColor: dark,
-              style: TextStyle(
-                color: dark,
-                fontSize: Get.height / 50.4,
-                fontWeight: FontWeight.w500,
+          TextField(
+            controller: controller.descriptionFour,
+            onChanged: (value) {
+              controller.validatedescriptionFour(value);
+            },
+            keyboardType: TextInputType.phone,
+            cursorColor: dark,
+            style: TextStyle(
+              color: dark,
+              fontSize: Get.height / 50.4,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Krub',
+            ),
+            decoration: InputDecoration(
+              hintText: 'Enter description Price',
+              hintStyle: TextStyle(
+                color: darkgray,
+                fontSize: Get.height / 58.1,
                 fontFamily: 'Krub',
               ),
-              decoration: InputDecoration(
-                hintText: 'Enter description Price',
-                hintStyle: TextStyle(
-                  color: darkgray,
-                  fontSize: Get.height / 58.1,
-                  fontFamily: 'Krub',
-                ),
-                filled: true,
-                fillColor: lightgray,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide(
-                    color: primary,
-                    width: Get.height / 756,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Get.height / 54),
-                  borderSide: BorderSide.none,
-                ),
+              filled: true,
+              fillColor: lightgray,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide(color: primary, width: Get.height / 756),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Get.height / 54),
+                borderSide: BorderSide.none,
               ),
             ),
           ),
@@ -557,73 +521,153 @@ Widget formsection(HomeControler controller) {
                   ),
           ),
           SizedBox(height: Get.height / 32.8),
-          //<=============== Payment Option Selection  ===============>
+
+          // CheckBox Design
           Row(
             children: [
-              //<===============  Cash Option ===============>
-              Obx(
-                () => GestureDetector(
-                  onTap: () => controller.changeType('Cash'),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        controller.selectedType.value == 'Cash'
-                            ? 'assets/images/check_box.png'
-                            : 'assets/images/check_box_outline_blank.png',
-                        height: Get.height / 37.8,
-                        width: Get.height / 37.8,
-                      ),
-
-                      SizedBox(width: Get.height / 94.5),
-                      Text(
-                        "Cash",
-                        style: TextStyle(
-                          color: dark,
-                          fontSize: Get.height / 54,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Krub',
+              // Cash Checkbox
+              Row(
+                children: [
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        if (!controller.cashCheckbox.value) {
+                          controller.cashCheckbox.value = true;
+                          controller.chequeCheckbox.value = false;
+                        }
+                      },
+                      child: Container(
+                        width: Get.height / 42,
+                        height: Get.height / 42,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Get.height / 151.2,
+                          ),
+                          border: Border.all(
+                            color: controller.cashCheckbox.value
+                                ? Colors.transparent
+                                : darkgray,
+                            width: controller.cashCheckbox.value ? 0 : 2,
+                          ),
+                          color: controller.cashCheckbox.value
+                              ? primary
+                              : Colors.transparent,
                         ),
+                        child: controller.cashCheckbox.value
+                            ? Icon(
+                                Icons.check,
+                                size: Get.height / 47.25,
+                                color: Colors.white,
+                              )
+                            : SizedBox(),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+
+                  SizedBox(width: Get.height / 151.2),
+
+                  // Text Title
+                  GestureDetector(
+                    onTap: () {
+                      if (!controller.cashCheckbox.value) {
+                        controller.cashCheckbox.value = true;
+                        controller.chequeCheckbox.value = false;
+                      }
+                    },
+                    child: Text(
+                      'Cash',
+                      style: TextStyle(
+                        fontSize: Get.height / 54,
+                        fontFamily: "krub",
+                        fontWeight: FontWeight.w500,
+                        color: primary,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: Get.height / 75.6),
+                ],
               ),
-              SizedBox(width: Get.height / 29.07),
-              //<===============  Cheque Option  ===============>
-              Obx(
-                () => GestureDetector(
-                  onTap: () => controller.changeType('Cheque'),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        controller.selectedType.value == 'Cheque'
-                            ? 'assets/images/check_box.png'
-                            : 'assets/images/check_box_outline_blank.png',
-                        height: Get.height / 37.8,
-                        width: Get.height / 37.8,
-                      ),
 
-                      SizedBox(width: Get.height / 94.5),
-                      Text(
-                        "Cheque",
-                        style: TextStyle(
-                          color: dark,
-                          fontSize: Get.height / 54,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Krub',
+              SizedBox(width: Get.height / 75.6),
+
+              // Cheque Checkbox
+              Row(
+                children: [
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        if (!controller.chequeCheckbox.value) {
+                          controller.chequeCheckbox.value = true;
+                          controller.cashCheckbox.value = false;
+                        }
+                      },
+                      child: Container(
+                        width: Get.height / 42,
+                        height: Get.height / 42,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Get.height / 151.2,
+                          ),
+                          border: Border.all(
+                            color: controller.chequeCheckbox.value
+                                ? Colors.transparent
+                                : darkgray,
+                            width: controller.chequeCheckbox.value ? 0 : 2,
+                          ),
+                          color: controller.chequeCheckbox.value
+                              ? primary
+                              : Colors.transparent,
                         ),
+                        child: controller.chequeCheckbox.value
+                            ? Icon(
+                                Icons.check,
+                                size: Get.height / 47.25,
+                                color: Colors.white,
+                              )
+                            : SizedBox(),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+
+                  SizedBox(width: Get.height / 151.2),
+
+                  // Text Title
+                  GestureDetector(
+                    onTap: () {
+                      if (!controller.chequeCheckbox.value) {
+                        controller.chequeCheckbox.value = true;
+                        controller.cashCheckbox.value = false;
+                      }
+                    },
+                    child: Text(
+                      'Cheque',
+                      style: TextStyle(
+                        fontSize: Get.height / 54,
+                        fontFamily: "krub",
+                        fontWeight: FontWeight.w500,
+                        color: primary,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: Get.height / 75.6),
+                ],
               ),
             ],
           ),
-          SizedBox(height: Get.height / 34.36),
+
+          Obx(
+            () => SizedBox(
+              height: controller.cashCheckbox.value == true
+                  ? 0
+                  : Get.height / 37.8,
+            ),
+          ),
 
           /// ================= Cheque Details Section =================
           Obx(
-            () => controller.selectedType.value == 'Cheque'
+            () => controller.chequeCheckbox.value == true
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -638,40 +682,38 @@ Widget formsection(HomeControler controller) {
                         ),
                       ),
                       SizedBox(height: Get.height / 84),
-                      SizedBox(
-                        height: Get.height / 16.8,
-                        child: TextField(
-                          cursorColor: dark,
-                          style: TextStyle(
-                            color: dark,
-                            fontSize: Get.height / 50.4,
-                            fontWeight: FontWeight.w500,
+                      TextField(
+                        keyboardType: TextInputType.phone,
+                        cursorColor: dark,
+                        style: TextStyle(
+                          color: dark,
+                          fontSize: Get.height / 50.4,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Krub',
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Enter cheque or draft number',
+                          hintStyle: TextStyle(
+                            color: darkgray,
+                            fontSize: Get.height / 58.1,
                             fontFamily: 'Krub',
                           ),
-                          decoration: InputDecoration(
-                            hintText: 'Enter cheque or draft number',
-                            hintStyle: TextStyle(
-                              color: darkgray,
-                              fontSize: Get.height / 58.1,
-                              fontFamily: 'Krub',
+                          filled: true,
+                          fillColor: lightgray,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              Get.height / 54,
                             ),
-                            filled: true,
-                            fillColor: lightgray,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide(
-                                color: primary,
-                                width: Get.height / 756,
-                              ),
+                            borderSide: BorderSide(
+                              color: primary,
+                              width: Get.height / 756,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              Get.height / 54,
                             ),
+                            borderSide: BorderSide.none,
                           ),
                         ),
                       ),
@@ -688,97 +730,114 @@ Widget formsection(HomeControler controller) {
                         ),
                       ),
                       SizedBox(height: Get.height / 84),
-                      SizedBox(
-                        height: Get.height / 16.8,
-                        child: TextField(
-                          cursorColor: dark,
-                          style: TextStyle(
-                            color: dark,
-                            fontSize: Get.height / 50.4,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Krub',
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'Enter bank name',
-                            hintStyle: TextStyle(
-                              color: darkgray,
-                              fontSize: Get.height / 58.1,
-                              fontFamily: 'Krub',
-                            ),
-                            filled: true,
-                            fillColor: lightgray,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide(
-                                color: primary,
-                                width: Get.height / 756,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: Get.height / 37.8),
-
-                      //<===============  Cheque Date Field ===============>
-                      Text(
-                        'Date',
+                      TextField(
+                        cursorColor: dark,
                         style: TextStyle(
                           color: dark,
                           fontSize: Get.height / 50.4,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Krub',
                         ),
-                      ),
-                      SizedBox(height: Get.height / 84),
-                      SizedBox(
-                        height: Get.height / 16.8,
-                        child: TextField(
-                          cursorColor: dark,
-                          style: TextStyle(
-                            color: dark,
-                            fontSize: Get.height / 50.4,
-                            fontWeight: FontWeight.w500,
+                        decoration: InputDecoration(
+                          hintText: 'Enter bank name',
+                          hintStyle: TextStyle(
+                            color: darkgray,
+                            fontSize: Get.height / 58.1,
                             fontFamily: 'Krub',
                           ),
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.calendar_month_outlined,
-                              size: 22,
-                              color: dark,
+                          filled: true,
+                          fillColor: lightgray,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              Get.height / 54,
                             ),
-                            hintText: 'Select date',
-                            hintStyle: TextStyle(
-                              color: darkgray,
-                              fontSize: Get.height / 58.1,
-                              fontFamily: 'Krub',
-                            ),
-                            filled: true,
-                            fillColor: lightgray,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide(
-                                color: primary,
-                                width: Get.height / 756,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                Get.height / 54,
-                              ),
-                              borderSide: BorderSide.none,
+                            borderSide: BorderSide(
+                              color: primary,
+                              width: Get.height / 756,
                             ),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              Get.height / 54,
+                            ),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
+                      ),
+                      SizedBox(height: Get.height / 37.8),
+
+                      // Select Date Input Field
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Title Text
+                          Text(
+                            'Date',
+                            style: TextStyle(
+                              fontFamily: 'krub',
+                              fontSize: Get.height / 54,
+                              fontWeight: FontWeight.w500,
+                              color: dark,
+                            ),
+                          ),
+
+                          // Input Design
+                          Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                color: lightgray,
+                                borderRadius: BorderRadius.circular(
+                                  Get.height / 54,
+                                ),
+                              ),
+                              margin: EdgeInsets.only(top: Get.height / 75.6),
+                              width: double.infinity,
+                              // height: Get.height / 16.32,
+                              child: TextField(
+                                readOnly: true,
+                                onTap: () => controller.selectDate(context),
+                                style: TextStyle(
+                                  textBaseline: TextBaseline.ideographic,
+                                  fontSize: Get.height / 50.4,
+                                  fontFamily: 'krub',
+                                  color: dark,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                cursorColor: primary,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                    top: Get.height / 75.6,
+                                    // bottom: Get.height / 75.6,
+                                    right: Get.width / 24,
+                                    left: Get.width / 24,
+                                  ),
+                                  border: InputBorder.none,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      Get.height / 54,
+                                    ),
+                                    borderSide: BorderSide(color: primary),
+                                  ),
+                                  suffixIcon: Icon(
+                                    Icons.calendar_month_outlined,
+                                    size: Get.height / 42,
+                                    color: darkgray,
+                                  ),
+                                  hintText: 'Select date',
+                                  hintStyle: TextStyle(
+                                    color: darkgray,
+                                    fontFamily: 'krub',
+                                    fontSize: Get.height / 57.85,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                controller: TextEditingController(
+                                  text: controller.formatedDate.value,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   )

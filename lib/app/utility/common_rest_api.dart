@@ -1,6 +1,5 @@
 import 'package:e_gram_panchayat/app/utility/toster_message.dart';
 import 'package:http/http.dart' as http;
-import 'theme.dart';
 
 class ApiServices {
   // Get Method With Token Function
@@ -15,11 +14,12 @@ class ApiServices {
           .timeout(
             const Duration(seconds: 25), // Set your timeout duration here
             onTimeout: () {
-              // Handle timeout by throwing an exception
-              throw toasterMessage(
+              toasterMessage(
                 'Request is timed out. Please Try Again.',
-                error,
+                type: ToastType.error,
               );
+
+              throw Exception("Request Timeout");
             },
           );
 
@@ -42,11 +42,12 @@ class ApiServices {
           .timeout(
             const Duration(seconds: 25), // Set your timeout duration here
             onTimeout: () {
-              // Handle timeout by throwing an exception
-              throw toasterMessage(
+              toasterMessage(
                 'Request is timed out. Please Try Again.',
-                error,
+                type: ToastType.error,
               );
+
+              throw Exception("Request Timeout");
             },
           );
 
@@ -77,11 +78,12 @@ class ApiServices {
           .timeout(
             const Duration(seconds: 25), // Set your timeout duration here
             onTimeout: () {
-              // Handle timeout by throwing an exception
-              throw toasterMessage(
+              toasterMessage(
                 'Request is timed out. Please Try Again.',
-                error,
+                type: ToastType.error,
               );
+
+              throw Exception("Request Timeout");
             },
           );
 
@@ -105,13 +107,15 @@ class ApiServices {
           .timeout(
             const Duration(seconds: 25), // Set your timeout duration here
             onTimeout: () {
-              // Handle timeout by throwing an exception
-              throw toasterMessage(
+              toasterMessage(
                 'Request is timed out. Please Try Again.',
-                error,
+                type: ToastType.error,
               );
+
+              throw Exception("Request Timeout");
             },
           );
+
       return response;
     } catch (e) {
       // throw toasterMessage(e.toString(), Danger);
