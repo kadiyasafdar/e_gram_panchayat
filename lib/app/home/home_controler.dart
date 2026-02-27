@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:e_gram_panchayat/app/history/history_screen.dart';
 import 'package:e_gram_panchayat/app/utility/common_rest_api.dart';
 import 'package:e_gram_panchayat/app/utility/environment.dart';
 import 'package:e_gram_panchayat/app/utility/toster_message.dart';
@@ -220,6 +221,7 @@ class HomeControler extends GetxController {
 
         // Toaster Message
         toasterMessage(responseData['message'], type: ToastType.success);
+        Get.to(() => HistoryScreen());
       } else {
         // Off Loader
         Get.back();
