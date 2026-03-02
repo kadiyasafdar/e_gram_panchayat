@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:e_gram_panchayat/app/history/history_screen.dart';
 import 'package:e_gram_panchayat/app/utility/common_rest_api.dart';
 import 'package:e_gram_panchayat/app/utility/environment.dart';
+import 'package:e_gram_panchayat/app/utility/routes.dart';
 import 'package:e_gram_panchayat/app/utility/toster_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,6 +43,7 @@ class HomeControler extends GetxController {
         dateToSendToApi.value = DateFormat('yyyy-MM-dd').format(picked);
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -198,7 +199,7 @@ class HomeControler extends GetxController {
         'bank_name': bankName.text,
         'cheque_date': formatedDate.value,
       };
-
+      // ignore: avoid_print
       print(params);
 
       // API Calling
@@ -207,10 +208,11 @@ class HomeControler extends GetxController {
         Environment.savaDataInvoice,
         params,
       );
-
+      // ignore: avoid_print
       print(response);
 
       var responseData = jsonDecode(response.body) as Map<String, dynamic>;
+      // ignore: avoid_print
       print(responseData);
 
       if (response.statusCode == 200 && responseData['status'] == 'success') {
@@ -221,7 +223,7 @@ class HomeControler extends GetxController {
 
         // Toaster Message
         toasterMessage(responseData['message'], type: ToastType.success);
-        Get.to(() => HistoryScreen());
+        Get.toNamed(AppRouter.history);
       } else {
         // Off Loader
         Get.back();
@@ -231,12 +233,13 @@ class HomeControler extends GetxController {
       }
     } catch (e) {
       // Off Loader
-
+      // ignore: avoid_print
       print(e);
       Get.back();
 
       // Toaster Message
       toasterMessage('something went wrong', type: ToastType.error);
+      // ignore: avoid_print
       print('toasterMessage catch');
     }
   }

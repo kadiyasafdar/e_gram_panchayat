@@ -20,6 +20,7 @@ class HistoryBottomsheetScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Header Section
           Container(
             width: Get.height,
             decoration: BoxDecoration(color: primary.withValues(alpha: 0.10)),
@@ -31,6 +32,7 @@ class HistoryBottomsheetScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Header Title
                   Text(
                     'Search',
                     style: TextStyle(
@@ -40,9 +42,11 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                       fontFamily: 'Krub',
                     ),
                   ),
+
+                  // Close Button
                   GestureDetector(
                     onTap: () {
-                      Get.back();
+                      Get.back(); // Close bottom sheet
                     },
                     child: Icon(
                       Icons.close,
@@ -54,11 +58,14 @@ class HistoryBottomsheetScreen extends StatelessWidget {
               ),
             ),
           ),
+
+          // Body Section
           Padding(
             padding: EdgeInsets.all(Get.height / 37.8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Invoice Number Label
                 Text(
                   'Invoice Number',
                   style: TextStyle(
@@ -68,7 +75,10 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                     fontFamily: 'Krub',
                   ),
                 ),
+
                 SizedBox(height: Get.height / 84),
+
+                // Invoice Number Input Field
                 SizedBox(
                   height: Get.height / 16.8,
                   child: TextField(
@@ -102,7 +112,10 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 SizedBox(height: Get.height / 37.8),
+
+                // Date Label
                 Text(
                   'Date',
                   style: TextStyle(
@@ -112,7 +125,10 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                     fontFamily: 'Krub',
                   ),
                 ),
+
                 SizedBox(height: Get.height / 84),
+
+                // Date Input Field
                 SizedBox(
                   height: Get.height / 16.8,
                   child: TextField(
@@ -150,9 +166,13 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 SizedBox(height: Get.height / 37.8),
+
+                // Action Buttons Row
                 Row(
                   children: [
+                    // Reset Button
                     Expanded(
                       child: Container(
                         height: Get.height / 15.75,
@@ -178,13 +198,15 @@ class HistoryBottomsheetScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     SizedBox(width: Get.height / 37.8),
+
+                    // Search Button
                     Expanded(
                       child: Container(
                         height: Get.height / 15.75,
                         decoration: BoxDecoration(
                           color: primary,
-
                           borderRadius: BorderRadius.circular(
                             Get.height / 47.25,
                           ),

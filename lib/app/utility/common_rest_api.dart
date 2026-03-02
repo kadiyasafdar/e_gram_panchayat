@@ -1,4 +1,5 @@
-import 'package:e_gram_panchayat/app/utility/toster_message.dart';
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class ApiServices {
@@ -9,25 +10,13 @@ class ApiServices {
     String token,
   ) async {
     try {
-      http.Response response = await http
-          .get(Uri.parse(uri), headers: {'Authorization': '$token'})
-          .timeout(
-            const Duration(seconds: 25), // Set your timeout duration here
-            onTimeout: () {
-              toasterMessage(
-                'Request is timed out. Please Try Again.',
-                type: ToastType.error,
-              );
-
-              throw Exception("Request Timeout");
-            },
-          );
-
+      http.Response response = await http.get(
+        Uri.parse(uri),
+        headers: {'Authorization': 'Bearer $token'},
+      );
       return response;
     } catch (e) {
       // throw toasterMessage(e.toString(), Danger);
-
-      print(e.toString());
 
       throw e.toString();
     }
@@ -37,25 +26,10 @@ class ApiServices {
 
   static Future<http.Response> getPublicAuth(String uri) async {
     try {
-      http.Response response = await http
-          .get(Uri.parse(uri))
-          .timeout(
-            const Duration(seconds: 25), // Set your timeout duration here
-            onTimeout: () {
-              toasterMessage(
-                'Request is timed out. Please Try Again.',
-                type: ToastType.error,
-              );
-
-              throw Exception("Request Timeout");
-            },
-          );
-
+      http.Response response = await http.get(Uri.parse(uri));
       return response;
     } catch (e) {
       // throw toasterMessage(e.toString(), Danger);
-
-      print(e.toString());
 
       throw e.toString();
     }
@@ -63,34 +37,41 @@ class ApiServices {
 
   // Post Method With Token Function
 
+  // static Future<http.Response> postPublicAuthToken(
+  //   String uri,
+  //   dynamic body,
+  //   String token,
+  // ) async {
+  //   try {
+  //     http.Response response = await http.post(
+  //       Uri.parse(uri),
+  //       body: body,
+  //       headers: {'Authorization': 'Bearer $token'},
+  //     );
+  //     return response;
+  //   } catch (e) {
+  //     throw e.toString();
+  //   }
+  // }
+
   static Future<http.Response> postPublicAuthToken(
     String uri,
     dynamic body,
     String token,
   ) async {
     try {
-      http.Response response = await http
-          .post(
-            Uri.parse(uri),
-            body: body,
-            headers: {'Authorization': '$token'},
-          )
-          .timeout(
-            const Duration(seconds: 25), // Set your timeout duration here
-            onTimeout: () {
-              toasterMessage(
-                'Request is timed out. Please Try Again.',
-                type: ToastType.error,
-              );
-
-              throw Exception("Request Timeout");
-            },
-          );
+      http.Response response = await http.post(
+        Uri.parse(uri),
+        body: body is String ? body : jsonEncode(body),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
 
       return response;
     } catch (e) {
-      print(e.toString());
-
       throw e.toString();
     }
   }
@@ -102,25 +83,10 @@ class ApiServices {
     dynamic body,
   ) async {
     try {
-      http.Response response = await http
-          .post(Uri.parse(uri), body: body)
-          .timeout(
-            const Duration(seconds: 25), // Set your timeout duration here
-            onTimeout: () {
-              toasterMessage(
-                'Request is timed out. Please Try Again.',
-                type: ToastType.error,
-              );
-
-              throw Exception("Request Timeout");
-            },
-          );
-
+      http.Response response = await http.post(Uri.parse(uri), body: body);
       return response;
     } catch (e) {
       // throw toasterMessage(e.toString(), Danger);
-
-      print(e.toString());
 
       throw e.toString();
     }

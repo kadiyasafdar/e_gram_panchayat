@@ -2,6 +2,7 @@ import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Delete Confirmation Dialog Screen
 class HisroryDeleteDialogScreen extends StatelessWidget {
   const HisroryDeleteDialogScreen({super.key});
 
@@ -9,6 +10,7 @@ class HisroryDeleteDialogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
+        // Dialog Background Decoration
         decoration: BoxDecoration(
           color: tertiary,
           borderRadius: BorderRadius.circular(Get.height / 29.07),
@@ -18,23 +20,30 @@ class HisroryDeleteDialogScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Trash Icon Image
               Image.asset(
                 'assets/images/Trash.png',
                 height: Get.height / 12.81,
                 width: Get.height / 12.81,
               ),
+
               SizedBox(height: Get.height / 58.15),
+
+              // Title Text
               Text(
                 'Confirm Delete?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xffFF0000),
+                  color: error,
                   fontSize: Get.height / 47.25,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Krub',
                 ),
               ),
+
               SizedBox(height: Get.height / 58.15),
+
+              // Description Text
               Text(
                 'Are you sure you want to delete this record? This action cannot be undone.',
                 textAlign: TextAlign.center,
@@ -44,13 +53,17 @@ class HisroryDeleteDialogScreen extends StatelessWidget {
                   fontFamily: 'Krub',
                 ),
               ),
+
               SizedBox(height: Get.height / 44.47),
+
+              // Action Buttons Row
               Row(
                 children: [
+                  // Cancel Button
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        Get.back();
+                        Get.back(); // Close dialog
                       },
                       child: Container(
                         height: Get.height / 16.8,
@@ -74,12 +87,15 @@ class HisroryDeleteDialogScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(width: Get.height / 37.8),
+
+                  // Delete Button
                   Expanded(
                     child: Container(
                       height: Get.height / 16.8,
                       decoration: BoxDecoration(
-                        color: primary,
+                        color: primary, // Primary theme color
                         borderRadius: BorderRadius.circular(Get.height / 47.25),
                       ),
                       child: Center(
