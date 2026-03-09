@@ -1,9 +1,11 @@
 import 'package:e_gram_panchayat/app/history/hisrory_delete_dialog_screen.dart';
 import 'package:e_gram_panchayat/app/history/history_bottomsheet_screen.dart';
+import 'package:e_gram_panchayat/app/history/history_controller.dart';
+import 'package:e_gram_panchayat/app/home/home_controller.dart';
 import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:e_gram_panchayat/app/utility/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 // Main History Screen
 class HistoryScreen extends StatelessWidget {
@@ -11,21 +13,19 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HistoryController());
+
     return Scaffold(
-      backgroundColor: primary, // Screen background color
+      backgroundColor: primary,
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              // Scrollable content area
               child: ListView(
-                children: [
-                  header(), // Top header section
-                  innvoiceHistoryItem(), // Invoice list section
-                ],
+                children: [header(), innvoiceHistoryItem(controller)],
               ),
             ),
-            bottomnewbar(), // Bottom navigation bar
+            bottomnewbar(),
           ],
         ),
       ),
@@ -41,10 +41,8 @@ Widget header() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Left side empty space for alignment
         SizedBox(width: Get.height / 47.25, height: Get.height / 47.25),
 
-        // Screen Title
         Text(
           'History',
           style: TextStyle(
@@ -55,11 +53,9 @@ Widget header() {
           ),
         ),
 
-        //<=============== history bottom sheet ===============>
-        // Filter / Search Button
         GestureDetector(
           onTap: () {
-            Get.bottomSheet(HistoryBottomsheetScreen()); // Open bottom sheet
+            Get.bottomSheet(HistoryBottomsheetScreen());
           },
           child: Container(
             decoration: BoxDecoration(
@@ -80,9 +76,10 @@ Widget header() {
     ),
   );
 }
-//<=============== InnvoiceHistoryItem ===============>
 
-Widget innvoiceHistoryItem() {
+//<=============== Invoice List Section ===============>
+
+Widget innvoiceHistoryItem(HistoryController controller) {
   return Container(
     width: Get.width,
     height: Get.height / 0.88,
@@ -95,51 +92,63 @@ Widget innvoiceHistoryItem() {
     ),
     child: Padding(
       padding: EdgeInsets.all(Get.height / 37.8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //<===============  InvoiceCard 1234  ===============>
-          Container(
-            width: Get.width,
-            height: Get.height / 4.9,
-            decoration: BoxDecoration(
-              color: Color(0xffF2E3F3),
-              borderRadius: BorderRadius.circular(Get.height / 25.2),
-            ),
-            child: Padding(
+      child: Obx(
+        () => ListView.builder(
+          controller: controller.scrollController,
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          itemCount: controller.historyList.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.only(bottom: Get.height / 37.8),
               padding: EdgeInsets.all(Get.height / 37.8),
+              decoration: BoxDecoration(
+                color:
+                    controller.colorList[index % controller.colorList.length],
+                borderRadius: BorderRadius.circular(Get.height / 25.02),
+              ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Invoice header row (Number + Edit + Delete)
+                  /// Invoice Number + Icons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Invoice Number
-                      Row(
-                        children: [
-                          Text(
-                            'Invoice No : 1234',
-                            style: TextStyle(
-                              color: dark,
-                              fontSize: Get.height / 42,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Krub',
-                            ),
+                      Expanded(
+                        child: Text(
+                          'Invoice No : ${controller.historyList[index]['invoice_number']}',
+                          style: TextStyle(
+                            color: dark,
+                            fontSize: Get.height / 42,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Krub',
                           ),
-                        ],
+                        ),
                       ),
 
-                      // Action Icons Section
                       Row(
                         children: [
-                          // Edit Icon
-                          Image.asset(
-                            'assets/images/border_color.png',
-                            width: Get.height / 42,
-                            height: Get.height / 42,
+                          /// Edit
+                          GestureDetector(
+                            onTap: () {
+                              Get.delete<HomeController>();
+
+                              Get.toNamed(
+                                AppRouter.home,
+                                arguments: {
+                                  'historyId': controller
+                                      .historyList[index]['id']
+                                      .toString(),
+                                },
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/images/border_color.png',
+                              width: Get.height / 42,
+                              height: Get.height / 42,
+                            ),
                           ),
 
-                          // Vertical Divider
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: Get.height / 126,
@@ -151,8 +160,7 @@ Widget innvoiceHistoryItem() {
                             ),
                           ),
 
-                          //<=============== Hisrory Delete Dialog ===============>
-                          // Delete Icon
+                          /// Delete
                           GestureDetector(
                             onTap: () {
                               Get.dialog(HisroryDeleteDialogScreen());
@@ -160,7 +168,7 @@ Widget innvoiceHistoryItem() {
                             child: Icon(
                               Icons.delete_forever_rounded,
                               size: Get.height / 42,
-                              color: Color(0xffFF0000),
+                              color: error,
                             ),
                           ),
                         ],
@@ -170,7 +178,7 @@ Widget innvoiceHistoryItem() {
 
                   SizedBox(height: Get.height / 126),
 
-                  // Date Section
+                  /// Date
                   Row(
                     children: [
                       Image.asset(
@@ -181,9 +189,8 @@ Widget innvoiceHistoryItem() {
                       ),
                       SizedBox(width: Get.height / 75.6),
 
-                      // Invoice Date Text
                       Text(
-                        '10 Feb 2025',
+                        controller.historyList[index]['created_at'].toString(),
                         style: TextStyle(
                           color: darkgray,
                           fontSize: Get.height / 50.4,
@@ -195,10 +202,9 @@ Widget innvoiceHistoryItem() {
 
                   SizedBox(height: Get.height / 50.4),
 
-                  // Invoice & Receipt Buttons Row
+                  /// Buttons
                   Row(
                     children: [
-                      // Invoice Button
                       Expanded(
                         child: Container(
                           height: Get.height / 16.8,
@@ -233,7 +239,6 @@ Widget innvoiceHistoryItem() {
 
                       SizedBox(width: Get.height / 58.15),
 
-                      // Receipt Button
                       Expanded(
                         child: Container(
                           height: Get.height / 16.8,
@@ -269,535 +274,9 @@ Widget innvoiceHistoryItem() {
                   ),
                 ],
               ),
-            ),
-          ),
-          SizedBox(height: Get.height / 37.8),
-
-          //<===============  InvoiceCard 4567 ===============>
-          Container(
-            width: Get.width,
-            height: Get.height / 4.9,
-            decoration: BoxDecoration(
-              color: Color(0xffEAEBDB),
-              borderRadius: BorderRadius.circular(Get.height / 25.2),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(Get.height / 37.8),
-              child: Column(
-                children: [
-                  // Invoice header row (Number + Edit + Delete)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Invoice Number
-                      Row(
-                        children: [
-                          Text(
-                            'Invoice No : 4567',
-                            style: TextStyle(
-                              color: dark,
-                              fontSize: Get.height / 42,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Krub',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // Action Icons Section
-                      Row(
-                        children: [
-                          // Edit Icon
-                          Image.asset(
-                            'assets/images/border_color.png',
-                            width: Get.height / 42,
-                            height: Get.height / 42,
-                          ),
-
-                          // Vertical Divider
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: Get.height / 126,
-                            ),
-                            child: Container(
-                              width: Get.height / 630,
-                              height: Get.height / 42,
-                              color: tertiary,
-                            ),
-                          ),
-
-                          //<=============== Hisrory Delete Dialog ===============>
-                          // Delete Icon
-                          GestureDetector(
-                            onTap: () {
-                              Get.dialog(HisroryDeleteDialogScreen());
-                            },
-                            child: Icon(
-                              Icons.delete_forever_rounded,
-                              size: Get.height / 42,
-                              color: Color(0xffFF0000),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 126),
-
-                  // Date Section
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/acute.png',
-                        width: Get.height / 37.8,
-                        height: Get.height / 37.8,
-                        color: darkgray,
-                      ),
-                      SizedBox(width: Get.height / 75.6),
-
-                      // Invoice Date Text
-                      Text(
-                        '10 Feb 2025',
-                        style: TextStyle(
-                          color: darkgray,
-                          fontSize: Get.height / 50.4,
-                          fontFamily: 'Krub',
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 50.4),
-
-                  // Invoice & Receipt Buttons Row
-                  Row(
-                    children: [
-                      // Invoice Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Invoice',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: Get.height / 58.15),
-
-                      // Receipt Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Receipt',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: Get.height / 37.8),
-
-          //<===============  InvoiceCard 8652 ===============>
-          Container(
-            width: Get.width,
-            height: Get.height / 4.9,
-            decoration: BoxDecoration(
-              color: Color(0xffDFF3E3),
-              borderRadius: BorderRadius.circular(Get.height / 25.2),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(Get.height / 37.8),
-              child: Column(
-                children: [
-                  // Invoice header row (Number + Edit + Delete)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Invoice Number
-                      Row(
-                        children: [
-                          Text(
-                            'Invoice No : 8652',
-                            style: TextStyle(
-                              color: dark,
-                              fontSize: Get.height / 42,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Krub',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // Action Icons Section
-                      Row(
-                        children: [
-                          // Edit Icon
-                          Image.asset(
-                            'assets/images/border_color.png',
-                            width: Get.height / 42,
-                            height: Get.height / 42,
-                          ),
-
-                          // Vertical Divider
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: Get.height / 126,
-                            ),
-                            child: Container(
-                              width: Get.height / 630,
-                              height: Get.height / 42,
-                              color: tertiary,
-                            ),
-                          ),
-
-                          //<=============== Hisrory Delete Dialog ===============>
-                          // Delete Icon
-                          GestureDetector(
-                            onTap: () {
-                              Get.dialog(HisroryDeleteDialogScreen());
-                            },
-                            child: Icon(
-                              Icons.delete_forever_rounded,
-                              size: Get.height / 42,
-                              color: Color(0xffFF0000),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 126),
-
-                  // Date Section
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/acute.png',
-                        width: Get.height / 37.8,
-                        height: Get.height / 37.8,
-                        color: darkgray,
-                      ),
-                      SizedBox(width: Get.height / 75.6),
-
-                      // Invoice Date Text
-                      Text(
-                        '10 Feb 2025',
-                        style: TextStyle(
-                          color: darkgray,
-                          fontSize: Get.height / 50.4,
-                          fontFamily: 'Krub',
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 50.4),
-
-                  // Invoice & Receipt Buttons Row
-                  Row(
-                    children: [
-                      // Invoice Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Invoice',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: Get.height / 58.15),
-
-                      // Receipt Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Receipt',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: Get.height / 37.8),
-
-          //<===============  InvoiceCard 1256 ===============>
-          Container(
-            width: Get.width,
-            height: Get.height / 4.9,
-            decoration: BoxDecoration(
-              color: Color(0xffE3F2FD),
-              borderRadius: BorderRadius.circular(Get.height / 25.2),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(Get.height / 37.8),
-              child: Column(
-                children: [
-                  // Invoice header row (Number + Edit + Delete)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Invoice Number
-                      Row(
-                        children: [
-                          Text(
-                            'Invoice No : 1256',
-                            style: TextStyle(
-                              color: dark,
-                              fontSize: Get.height / 42,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Krub',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // Action Icons Section
-                      Row(
-                        children: [
-                          // Edit Icon
-                          Image.asset(
-                            'assets/images/border_color.png',
-                            width: Get.height / 42,
-                            height: Get.height / 42,
-                          ),
-
-                          // Vertical Divider
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: Get.height / 126,
-                            ),
-                            child: Container(
-                              width: Get.height / 630,
-                              height: Get.height / 42,
-                              color: tertiary,
-                            ),
-                          ),
-
-                          //<=============== Hisrory Delete Dialog ===============>
-                          // Delete Icon
-                          GestureDetector(
-                            onTap: () {
-                              Get.dialog(HisroryDeleteDialogScreen());
-                            },
-                            child: Icon(
-                              Icons.delete_forever_rounded,
-                              size: Get.height / 42,
-                              color: Color(0xffFF0000),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 126),
-
-                  // Date Section
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/acute.png',
-                        width: Get.height / 37.8,
-                        height: Get.height / 37.8,
-                        color: darkgray,
-                      ),
-                      SizedBox(width: Get.height / 75.6),
-
-                      // Invoice Date Text
-                      Text(
-                        '10 Feb 2025',
-                        style: TextStyle(
-                          color: darkgray,
-                          fontSize: Get.height / 50.4,
-                          fontFamily: 'Krub',
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: Get.height / 50.4),
-
-                  // Invoice & Receipt Buttons Row
-                  Row(
-                    children: [
-                      // Invoice Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Invoice',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: Get.height / 58.15),
-
-                      // Receipt Button
-                      Expanded(
-                        child: Container(
-                          height: Get.height / 16.8,
-                          decoration: BoxDecoration(
-                            color: tertiary,
-                            borderRadius: BorderRadius.circular(
-                              Get.height / 47.25,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Mask group.png',
-                                height: Get.height / 37.8,
-                                width: Get.height / 37.8,
-                              ),
-                              SizedBox(width: Get.height / 58.15),
-                              Text(
-                                'Receipt',
-                                style: TextStyle(
-                                  color: darkgray,
-                                  fontSize: Get.height / 47.25,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Krub',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: Get.height / 37.8),
-        ],
+            );
+          },
+        ),
       ),
     ),
   );
@@ -808,7 +287,7 @@ Widget innvoiceHistoryItem() {
 Widget bottomnewbar() {
   return Container(
     width: Get.width,
-    height: Get.height / 7.8, // Bottom bar height
+    height: Get.height / 7.8,
     decoration: BoxDecoration(color: primary),
     child: Padding(
       padding: EdgeInsets.symmetric(
@@ -817,11 +296,11 @@ Widget bottomnewbar() {
       ),
       child: Row(
         children: [
-          // Home Button
+          /// Home Button
           Expanded(
             child: GestureDetector(
               onTap: () {
-                Get.toNamed(AppRouter.home); // Navigate to Home screen
+                Get.toNamed(AppRouter.home);
               },
               child: Container(
                 height: Get.height / 13.5,
@@ -855,7 +334,7 @@ Widget bottomnewbar() {
 
           SizedBox(width: Get.height / 37.8),
 
-          // History Button (Active Screen)
+          /// History Button
           Expanded(
             child: Container(
               height: Get.height / 13.5,

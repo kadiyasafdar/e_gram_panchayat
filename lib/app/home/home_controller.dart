@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class HomeControler extends GetxController {
+class HomeController extends GetxController {
   // Checkbox Variable
   RxBool cashCheckbox = false.obs;
   RxBool chequeCheckbox = false.obs;

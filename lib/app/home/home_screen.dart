@@ -1,4 +1,4 @@
-import 'package:e_gram_panchayat/app/home/home_controler.dart';
+import 'package:e_gram_panchayat/app/home/home_controller.dart';
 import 'package:e_gram_panchayat/app/utility/theme.dart';
 import 'package:e_gram_panchayat/app/utility/routes.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Initialize Controller
 
-    final controller = Get.put(HomeControler());
+    final controller = Get.put(HomeController());
 
     return Scaffold(
       backgroundColor: primary,
@@ -55,7 +55,7 @@ Widget header() {
 }
 //<=============== FORM SECTION  ===============>
 
-Widget formsection(HomeControler controller, BuildContext context) {
+Widget formsection(HomeController controller, BuildContext context) {
   return Container(
     width: Get.width,
 
