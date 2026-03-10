@@ -902,7 +902,7 @@ Widget bottomnewbar() {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/Frame.png',
+                    'assets/images/home_icon.png',
                     height: Get.height / 31.5,
                     width: Get.height / 31.5,
                   ),
@@ -937,7 +937,7 @@ Widget bottomnewbar() {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/Frame (1).png',
+                      'assets/images/history_icon.png',
                       height: Get.height / 31.5,
                       width: Get.height / 31.5,
                     ),
